@@ -1,4 +1,4 @@
-body{
+/* body{
 	margin: 0px;
 	font-family:'Poppins', sans-serif;
 }
@@ -12,6 +12,7 @@ body{
 	background-image: url('../img/reg1.jpg');
 
 }
+
 
 .form_space{
 	width:40%;
@@ -57,4 +58,4 @@ input[type=submit],input[type=button] {
 
 input[type=submit]:hover,input[type=button]:hover{
 	background-color: #EE2A34;
-}
+} */
