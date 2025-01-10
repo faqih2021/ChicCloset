@@ -56,7 +56,7 @@ if($order_det_results->num_rows>0){
 		echo "<td><center><p>".$order_det_row['price']."</p></center></td>";
 		echo "<td><center><p>".$order_det_row['quantity']."</p></center></td>";
 		echo "<td><center><p>".$order_det_row['price']*$order_det_row['quantity']."</p></center></td>";
-	echo "</tr>";
+		echo "</tr>";
 
 
 	}

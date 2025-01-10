@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
         <div class="right-side">
             <span><?php echo $item_name ?></span>
             <div class="product-price">
-                <span>Rs.<?php echo $price ?> </span>
+                <span>Rp. <?php echo $price ?> </span>
             </div>
             <div class="description-box">
                 <p><?php echo $item_desc ?> </p>
@@ -128,7 +128,7 @@ if ($result->num_rows > 0) {
 
 
 
-
+  
 ?>
 
 </div>

@@ -3,92 +3,63 @@
 session_start();
 require 'config.php';
 
-if(isset($_SESSION['log_user'])){// check if the user is logged in
+if (isset($_SESSION['log_user'])) { // check if the user is logged in
 
-	$cus_id=$_SESSION['log_user'];
+	$cus_id = $_SESSION['log_user'];
 
-	if(isset($_POST['addCart'])){// check if the button
+	if (isset($_POST['addCart'])) { // check if the button was pressed
 
-		
+		$sql = "SELECT * FROM cart WHERE cus_id=$cus_id"; // query cart id from cart table
+		$result = $conn->query($sql);
 
-	$sql="SELECT * FROM cart WHERE cus_id=$cus_id";//query cart id form cart table
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				$cart_id = $row['cart_id'];
+			}
 
-	$result=$conn->query($sql);
+			$item_name = $_GET['item_name']; // get the item name from itemDetails page using GET method
+			$quantity = $_POST['qty']; // get size and quantity from item details page
+			$size = $_POST['size'];
 
+			$sqli = "SELECT * FROM item WHERE name='$item_name' AND size='$size'"; // query the item from item table
+			$item_result = $conn->query($sqli);
 
-		if($result->num_rows>0){
-
-
-				while($row=$result->fetch_assoc()){
-
-
-					$cart_id=$row['cart_id'];
-
-
+			if ($item_result->num_rows > 0) {
+				while ($item_rows = $item_result->fetch_assoc()) {
+					$itm_id = $item_rows['item_code'];
+					$price = $item_rows['unit_price'];
+					$item_qty = $item_rows['stock'];
 				}
 
+				// Cek apakah item dengan ukuran tertentu sudah ada di cart_details
+				$checkCartDetails = "SELECT * FROM cart_details WHERE item_code='$itm_id' AND cart_id='$cart_id' AND size='$size'";
+				$cartDetailsResult = $conn->query($checkCartDetails);
 
+				if ($cartDetailsResult->num_rows > 0) {
+					// Item sudah ada di keranjang
+					echo "<script>alert('Barang sudah dipilih, mohon update pada keranjang Anda jika ingin menambah produk.');</script>";
+					header("Refresh:0; url=index.php"); // Redirect ke halaman Home
 
-			$item_name=$_GET['item_name'];//get the item name form temDetails page using get Method
-			
-			$quantity=$_POST['qty'];//get size and quantity from item details page
-			$size=$_POST['size'];
+				} else {
+					// Jika stok mencukupi, tambahkan ke cart_details
+					if ($quantity <= $item_qty) {
+						$sql_add = "INSERT INTO cart_details (item_code, cart_id, price, size, quantity) 
+                                    VALUES ('$itm_id', '$cart_id', '$price', '$size', '$quantity')";
 
-			$sqli="SELECT * FROM item WHERE name='$item_name' AND size='$size'";//query the item from cart table
-			
-			$item_result=$conn->query($sqli);
-
-			if($item_result->num_rows>0){
-
-					while($item_rows=$item_result->fetch_assoc()){
-
-
-
-							$itm_id=$item_rows['item_code'];
-							$price=$item_rows['unit_price'];
-							$item_qty=$item_rows['stock'];
-//not enough stocks
-
-
-
-					}
-
-						if($quantity<=$item_qty){
-
-
-								$sql_add="INSERT INTO cart_details VALUES('$itm_id','$cart_id','$price','$size','$quantity')";//add the new cart items to cart
-
-								if($conn->query($sql_add)){
-
-
-									header("Location:cart.php");//Re direcrt to cart
-
-								}else{
-									echo "<script>alert('Item already in Cart')</script>";
-								}
-
-
-						}else{
-							echo "<script>alert('Not enough stock')</script>";//if quantity>stocks
+						if ($conn->query($sql_add)) {
+							header("Location:cart.php"); // Redirect ke keranjang
+						} else {
+							echo "<script>alert('Gagal menambahkan barang ke keranjang.');</script>";
 						}
-
-			}else{
-
-				echo "<script>alert('Not enough stock')</script>";//if item not available
-			}//no items
-
-
+					} else {
+						echo "<script>alert('Stok tidak mencukupi');</script>"; // jika jumlah melebihi stok
+					}
+				}
+			} else {
+				echo "<script>alert('Barang tidak tersedia');</script>"; // jika barang tidak ditemukan
+			}
 		}
-
-
-
-	}//button not pressed
-
-	
-
-
-
-}else{
-
-	header("Location:login.php");
-}//Direct to log in page
+	}
+} else {
+	header("Location:login.php"); // Redirect ke halaman login
+}

@@ -1,95 +1,33 @@
-body{
-	font-family: 'Poppins', sans-serif;
-	background-image: url(../img/back1.jpg);
-	background-size: 1360px;
+table {
+    width: 90%; /* Membuat tabel melebar hingga 90% dari lebar layar */
+    margin: 20px auto; /* Pusatkan tabel */
+    border-collapse: collapse; /* Hilangkan garis ganda antar sel */
 }
 
-
-
-
-th
-{
-	width: 20%;
-	color: white;
-	background-color: #000000a1;
-	padding: 10px;
-	border:2px solid white;
-
+th, td {
+    border: 1px solid #ddd; /* Beri border */
+    padding: 12px; /* Beri jarak dalam sel */
+    text-align: center; /* Pusatkan teks */
 }
 
-table
-{
-	width: 70%;
-	border-collapse: collapse;
+th {
+    background-color: #f4f4f4; /* Warna latar untuk header */
+    font-weight: bold; /* Teks lebih tebal */
 }
 
-.order-table
-{
-	width: 100%;
-	margin:20px 0px 20px 0px;
+td {
+    font-size: 14px; /* Ukuran teks sel */
 }
 
-
-.order-table p
-{
-	font-size:12px; 
-
+button {
+    padding: 8px 16px; /* Ukuran tombol */
+    background-color: #ff4d4d; /* Warna tombol */
+    color: white; /* Warna teks tombol */
+    border: none; /* Hilangkan border tombol */
+    border-radius: 5px; /* Beri sudut melengkung */
+    cursor: pointer; /* Ganti cursor saat hover */
 }
 
-
-tr:nth-child(even)
-{
-	border:none;
-	background-color: lightgrey;
+button:hover {
+    background-color: #ff3333; /* Warna tombol saat dihover */
 }
-
-
-td
-{
-	padding: 5px;
-}
-
-
-.order-table input[type=number]
-{
-	width: 25%;
-	height: 20px;
-	box-sizing: border-box;
-	display: inline-block;
-	outline: none;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
-
-	.order_bar
-	{
-		width:80%;
-		height: 60px;
-		
-		float: left;
-	}
-	.order_bar a
-	{
-		color: black;
-		text-decoration: none;
-		margin: 20px;
-		padding: 8px 15px 8px 15px;
-	}
-
-	.order_bar a:hover
-	{
-		background-color: #ed1c24;
-		border-radius: 12px;
-	}
-
-	.order_bar a:active
-	{
-		background-color: #ed1c24;
-		border-radius: 10px;
-	}
-
-	a{
-		text-decoration: none;
-		color: black;
-	}

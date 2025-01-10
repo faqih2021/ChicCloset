@@ -42,7 +42,7 @@ if(isset($_SESSION['log_user'])){
 <!DOCTYPE html>
 <html>
 <head>
-	<title>insignia</title>
+	<title>WearMe</title>
 	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="src/css/home.css">
 	<link rel="stylesheet" href="src/css/header_footer.css" type="text/css">
@@ -50,7 +50,7 @@ if(isset($_SESSION['log_user'])){
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<script src="https://use.fontawesome.com/55f6362d7f.js"></script>
 	<!-- favi-con -->
-	<link rel="shortcut icon" type="image/jpg" href="src/img/favi.jpg">
+	<link rel="shortcut icon" type="image/jpg" href="src/img/wearmee.jpg">
 
 
 
@@ -80,7 +80,7 @@ if(isset($_SESSION['log_user'])){
 
 	<div class="header">
 		
-		<div class="logo_box"><img src="src/img/logo1.jpg"></div>
+		<div class="logo_box"><img src="src/img/logow1.jpg"></div>
 
 		<div class="nav_bar">
 			

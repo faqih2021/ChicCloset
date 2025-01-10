@@ -1,99 +1,70 @@
-
-
-<?php require 'header.php';
-
+<?php 
+require 'header.php';
 require 'config.php';
 
-$cus_id=$_SESSION['log_user'];
+$cus_id = $_SESSION['log_user'];
 
-$sql="SELECT * FROM orders WHERE cus_id=$cus_id";
+// Jika tombol "Delete" diklik
+if (isset($_POST['delete_order'])) {
+    $order_id = $_POST['order_id'];
 
+    // Query untuk menghapus pemesanan berdasarkan ID
+    $delete_sql = "DELETE FROM orders WHERE order_id=$order_id AND cus_id=$cus_id";
+    if ($conn->query($delete_sql) === TRUE) {
+        echo "<script>alert('Order deleted successfully.');</script>";
+    } else {
+        echo "<script>alert('Failed to delete the order.');</script>";
+    }
+}
+
+// Query untuk menampilkan daftar pemesanan
+$sql = "SELECT * FROM orders WHERE cus_id=$cus_id";
 ?>
 
-	<link rel="stylesheet" href="src/css/Order history.css" type="text/css">
-
+<link rel="stylesheet" href="src/css/Order_history.css" type="text/css">
 
 </head>
 <body>
 
-
-
-
-
-<center><h1> My Orders </h1></center>
-
-<!-- <div class="order_bar">
-	<a href="#">All Orders</a>
-	<a href="#">To Receive</a>
-	<a href="#">Cancellations</a>
-	<a href="#">Completed</a>
-</div>
-
-<input type="date" id="d1" name="date"> To
-<input type="date" id="d2" name="date">
-<br> -->
-
-
-
-
-
-
+<center><h1>My Orders</h1></center>
 
 <center>
-<table>
-	
-	<th>Order ID</th>
-	<th>Status</th>
-	<th>Address</th>
+<table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+        <th>Order ID</th>
+        <th>Status</th>
+        <th>Address</th>
+        <th>Actions</th>
+    </tr>
 
 <?php 
-	
-$order_results=$conn->query($sql);
+$order_results = $conn->query($sql);
 
-	if($order_results->num_rows>0){
+if ($order_results->num_rows > 0) {
+    while ($order_rows = $order_results->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td><center>".$order_rows['order_id']."</center></td>";
+        echo "<td><center>".$order_rows['order_status']."</center></td>";
+        echo "<td><center>".$order_rows['address']."</center></td>";
+        echo "<td><center>";
+        
+        // Tombol "View Details"
+        echo "<form action='orderDetails.php' method='GET' style='display:inline;'>";
+        echo "<input type='hidden' name='order_Id' value='".$order_rows['order_id']."'>";
+        echo "<button type='submit'>View Details</button>";
+        echo "</form> ";
 
-		while($order_rows=$order_results->fetch_assoc()){
-
-
-		echo "<tr>";
-
-		echo "<td><center><a href='orderDetails.php?order_Id=".$order_rows['order_id']."'>".$order_rows['order_id']."</a></center></td>";
-		echo "<td><center>".$order_rows['order_status']."</center></td>";
-		echo "<td><center>".$order_rows['address']."</center></td>";
-
-		echo "<tr>";
-
-
-
-
-
-		}//loop end
-
-
-
-
-
-	}else{
-
-		echo "No orders :(";
-	}  //no orders
-
-
-
-
-
+        echo "</center></td>";
+        echo "</tr>";
+    }
+} else {
+    echo "<tr><td colspan='4'><center>No orders :(</center></td></tr>";
+}
 ?>
 
-
-
-</center>
 </table>
+</center>
 
 <br><br>
 
-
-
-
-
-
-<?php include 'footer.php'?>
+<?php include 'footer.php'; ?>
